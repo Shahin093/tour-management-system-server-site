@@ -3,10 +3,21 @@ const { getTourService, addedDataTourService } = require("../services/tour.servi
 // get all Data 
 exports.getTourData = async (req, res, next) => {
     try {
-        const result = await getTourService();
+
+        // paggination 
+        const queries = {};
+        if (req.query.page) {
+            const { page = 1, limit = 10 } = req.query;
+            const skip = (page - 1) * parseInt(limit);
+            queries.skip = skip;
+            queries.limit = parseInt(limit);
+        }
+
+        const result = await getTourService(queries);
         res.status(200).json({
             status: 'success',
-            message: 'Successfully founded the tour'
+            message: 'Successfully founded the tour',
+            data: result
         })
     } catch (error) {
         res.status(400).json({
