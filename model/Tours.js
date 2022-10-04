@@ -6,6 +6,8 @@ const tourSchema = mongoose.Schema({
     name: {
         type: String,
         required: [true, 'Name is required'],
+        trim: true,
+        unique: [true, "Name must be unique"],
         minLength: [4, "At least 6 characters"],
         mixLength: [100, "must not be 100 characters upon"]
     },
@@ -40,6 +42,8 @@ const tourSchema = mongoose.Schema({
         required: true,
         default: 0
     }
+}, {
+    timestamps: true,
 });
 
 // create model 

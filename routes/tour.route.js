@@ -7,7 +7,7 @@ const router = express.Router();
 router
     .route('/')
     .get(tourControllers.getTourData)
-    .post()
+    .post(tourControllers.addedTourData)
 
 
 module.exports = router;
