@@ -1,4 +1,4 @@
-const { getTourService, addedDataTourService } = require("../services/tour.service")
+const { getTourService, addedDataTourService, tourGetDataByIdService } = require("../services/tour.service")
 
 // get all Data 
 exports.getTourData = async (req, res, next) => {
@@ -11,6 +11,16 @@ exports.getTourData = async (req, res, next) => {
             const skip = (page - 1) * parseInt(limit);
             queries.skip = skip;
             queries.limit = parseInt(limit);
+        }
+
+        if (req.query.fields) {
+
+            const fields = req.query.fields.split(',').join(' ');
+            queries.fields = fields;
+            console.log(fields);
+
+
+
         }
 
         const result = await getTourService(queries);
@@ -45,4 +55,25 @@ exports.addedTourData = async (req, res, next) => {
         });
         next(error)
     }
+};
+
+// get Data by id
+exports.tourDataById = async (req, res, next) => {
+    try {
+        const { id } = req.params;
+        const result = await tourGetDataByIdService(id);
+        res.status(200).json({
+            status: 'success',
+            message: 'Successfully added data the tours',
+            data: result
+        })
+    } catch (error) {
+        res.status(400).json({
+            status: 'fail',
+            message: 'Could not data BY ID the Tour',
+            error: error.message
+        });
+    }
 }
+
+

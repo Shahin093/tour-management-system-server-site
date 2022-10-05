@@ -9,5 +9,8 @@ router
     .get(tourControllers.getTourData)
     .post(tourControllers.addedTourData)
 
+router
+    .route('/:id')
+    .get(tourControllers.tourDataById)
 
 module.exports = router;
