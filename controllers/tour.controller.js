@@ -1,4 +1,4 @@
-const { getTourService, addedDataTourService, tourGetDataByIdService, tourUpdateByIdService, trendTopThreeTourService } = require("../services/tour.service")
+const { getTourService, addedDataTourService, tourGetDataByIdService, tourUpdateByIdService, trendTopThreeTourService, cheapestLeastPriceService } = require("../services/tour.service")
 
 // get all Data 
 exports.getTourData = async (req, res, next) => {
@@ -108,6 +108,24 @@ exports.tourViewsTrend = async (req, res, next) => {
         res.status(400).json({
             status: 'fail',
             message: 'Could not trended views top ten the Tour',
+            error: error.message
+        });
+    }
+};
+
+// cheapest
+exports.cheapestLeastPrice = async (req, res, next) => {
+    try {
+        const result = await cheapestLeastPriceService();
+        res.status(200).json({
+            status: 'success',
+            message: 'Successfully cheapest least price the tour!',
+            data: result
+        })
+    } catch (error) {
+        res.status(400).json({
+            status: 'fail',
+            message: 'Could not cheapest least price the Tour',
             error: error.message
         });
     }

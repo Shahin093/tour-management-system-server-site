@@ -8,6 +8,9 @@ router
     .route('/trending')
     .get(tourControllers.tourViewsTrend)
 
+router
+    .route('/cheapest')
+    .get(tourControllers.cheapestLeastPrice)
 
 router
     .route('/')
