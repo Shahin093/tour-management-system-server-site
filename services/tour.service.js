@@ -14,4 +14,21 @@ exports.addedDataTourService = async (data) => {
 exports.tourGetDataByIdService = async (id) => {
     const result = await Tour.findByIdAndUpdate(id, { $inc: { views: 1 } });
     return result;
+};
+
+exports.tourUpdateByIdService = async (id, data) => {
+    console.log(id, data);
+    if (data.acknowledged) {
+        const result = await Tour.updateOne({ '_id': id }, data, { runValidators: true });
+        return result;
+    } else {
+        return `Double entry with ${id}`;
+    }
+
+};
+
+// trending top 3 tour 
+exports.trendTopThreeTourService = async () => {
+    const result = await Tour.find({}).sort({ views: -1 }).limit(3);
+    return result;
 }
